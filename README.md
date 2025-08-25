@@ -61,3 +61,5 @@ step 04 - install tailwind to this project -
 npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0
 npm install --dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11
 npx tailwindcss init
+
+step 05 - add all tailwind to this project and i done it
