@@ -1,8 +1,14 @@
 import { Slot } from "expo-router";
+
+import { View } from "react-native";
 import "./../global.css";
 
 const Layout = () => {
-  return <Slot />;
+  return (
+    <View className="flex-1">
+      <Slot />
+    </View>
+  );
 };
 
 export default Layout;

@@ -63,3 +63,4 @@ npm install --dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11
 npx tailwindcss init
 
 step 05 - add all tailwind to this project and i done it
+step 06 - add loader into the startPage

@@ -1,12 +1,13 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
-const index = () => {
+const StartPage = () => {
   return (
-    <View className="items-center justify-center flex-1 bg-white">
-      <Text className="text-2xl font-bold text-red-500">Home</Text>
+    <View className="justify-center flex-1 ">
+      {/* loading indicator එකක් (spinner) display කරන්න භාවිත කරන එක. */}
+      <ActivityIndicator size="large" color="gray" />
     </View>
   );
 };
 
-export default index;
+export default StartPage;
