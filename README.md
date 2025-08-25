@@ -48,3 +48,16 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+
+step 01 - create this expo project - npx create-expo-app@latest StickerSmash
+
+
+
+step 02 - go to fire base and create a new project 
+step 03 - delete all of the files in app
+step 04 - install tailwind to this project - 
+npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0
+npm install --dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11
+npx tailwindcss init
