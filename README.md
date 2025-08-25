@@ -64,3 +64,6 @@ npx tailwindcss init
 
 step 05 - add all tailwind to this project and i done it
 step 06 - add loader into the startPage
+step 07 - install fire base into my project npm i firebase @react-native-async-storage/async-storage
+step 08 - add firebase.ts file into my project 
+step 09 - add firebase auth to my project 
