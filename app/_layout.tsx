@@ -1,26 +1,17 @@
+import { AuthProvider } from "@/context/authContext";
+import { LoaderProvider } from "@/context/LoaderContext";
 import { Slot } from "expo-router";
-
-import { View } from "react-native";
+import React from "react";
 import "./../global.css";
 
-const Layout = () => {
+const RootLayout = () => {
   return (
-    <View className="flex-1">
-      <Slot />
-    </View>
+    <LoaderProvider>
+      <AuthProvider>
+        <Slot />
+      </AuthProvider>
+    </LoaderProvider>
   );
 };
 
-export default Layout;
-
-// stack navigator
-
-// const stack = []
-
-// route.push
-
-// stack['screen_1', 'screen_2' , 'screen_3']
-
-// Routing  - > map
-
-// Navigation - >
+export default RootLayout;
