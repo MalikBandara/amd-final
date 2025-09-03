@@ -1,20 +1,20 @@
 import { register } from "@/services/authService";
 import { useRouter } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Animated,
-  Dimensions,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
-  ScrollView,
-  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  StatusBar,
+  Dimensions,
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
@@ -279,24 +279,6 @@ const Register = () => {
                 </View>
               )}
             </TouchableOpacity>
-
-            <View className="flex-row items-center mb-6">
-              <View className="flex-1 h-px bg-white/20" />
-              <Text className="mx-4 text-sm text-white/60">
-                or continue with
-              </Text>
-              <View className="flex-1 h-px bg-white/20" />
-            </View>
-
-            {/* Social Login Buttons */}
-            <View className="flex-row mb-8 space-x-4">
-              <TouchableOpacity className="items-center flex-1 py-3 border bg-white/5 border-white/10 rounded-xl">
-                <Text className="text-lg text-white">📱 Google</Text>
-              </TouchableOpacity>
-              <TouchableOpacity className="items-center flex-1 py-3 border bg-white/5 border-white/10 rounded-xl">
-                <Text className="text-lg text-white">🍎 Apple</Text>
-              </TouchableOpacity>
-            </View>
 
             {/* Login Link */}
             <Pressable
