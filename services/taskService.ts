@@ -1,4 +1,5 @@
-import api from "./config/api"
+import { db } from "@/firebase";
+import { Task } from "@/types/task";
 import {
   addDoc,
   collection,
@@ -8,69 +9,67 @@ import {
   getDocs,
   query,
   updateDoc,
-  where
-} from "firebase/firestore"
-import { db } from "@/firebase"
-import { Task } from "@/types/task"
+  where,
+} from "firebase/firestore";
 
 // tasks
-export const tasksRef = collection(db, "tasks")
+export const tasksRef = collection(db, "tasks");
 
 export const getAllTaskByUserId = async (userId: string) => {
-  const q = query(tasksRef, where("userId", "==", userId))
+  const q = query(tasksRef, where("userId", "==", userId));
 
-  const querySnapshot = await getDocs(q)
+  const querySnapshot = await getDocs(q);
   const taskList = querySnapshot.docs.map((taskRef) => ({
     id: taskRef.id,
-    ...taskRef.data()
-  })) as Task[]
-  return taskList
-}
+    ...taskRef.data(),
+  })) as Task[];
+  return taskList;
+};
 
 export const createTask = async (task: Task) => {
-  const docRef = await addDoc(tasksRef, task)
-  return docRef.id
-}
+  const docRef = await addDoc(tasksRef, task);
+  return docRef.id;
+};
 
 export const getAllTask = async () => {
-  const snapshot = await getDocs(tasksRef)
+  const snapshot = await getDocs(tasksRef);
   return snapshot.docs.map((task) => ({
     id: task.id,
-    ...task.data()
-  })) as Task[]
-}
+    ...task.data(),
+  })) as Task[];
+};
 
 export const getTaskById = async (id: string) => {
-  const taskDocRef = doc(db, "tasks", id)
-  const snapshot = await getDoc(taskDocRef)
+  const taskDocRef = doc(db, "tasks", id);
+  const snapshot = await getDoc(taskDocRef);
   return snapshot.exists()
     ? ({
         id: snapshot.id,
-        ...snapshot.data()
+        ...snapshot.data(),
       } as Task)
-    : null
-}
+    : null;
+};
 
 export const deleteTask = async (id: string) => {
-  const taskDocRef = doc(db, "tasks", id)
-  return deleteDoc(taskDocRef)
-}
+  const taskDocRef = doc(db, "tasks", id);
+  return deleteDoc(taskDocRef);
+};
 
 export const updateTask = async (id: string, task: Task) => {
-  const taskDocRef = doc(db, "tasks", id)
-  const { id: _id, ...taskData } = task // remove id
-  return updateDoc(taskDocRef, taskData)
-}
+  const taskDocRef = doc(db, "tasks", id);
+  const { id: _id, ...taskData } = task; // remove id
+  return updateDoc(taskDocRef, taskData);
+};
 
-export const getTasks = async () => {
-  const response = await api.get("/tasks")
-  return response.data
-}
+// export const getTasks = async () => {
+//   const response = await api.get("/tasks");
+//   return response.data;
+// };
 
-export const addTask = async (task: {
-  title: string
-  description?: string
-}) => {
-  const res = await api.post("/tasks", task)
-  return res.data
-}
+// export const addTask = async (task: {
+//   title: string;
+//   description?: string;
+// }) => {
+//   const res = await api.post("/tasks", task);
+//   return res.data;
+// };
