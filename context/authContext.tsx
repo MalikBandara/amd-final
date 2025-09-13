@@ -1,40 +1,36 @@
-import { View, Text } from "react-native";
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "@/firebase";
+import { onAuthStateChanged, User } from "firebase/auth";
 
-export const AuthContext = createContext<{ user: User | null; loading: boolean }>({
-  user: null,
-  loading: true,
-});
+type Ctx = {
+  user: User | null;
+  loading: boolean;
+  isAdmin: boolean;
+};
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+const AuthContext = createContext<Ctx>({ user: null, loading: true, isAdmin: false });
+export const useAuth = () => useContext(AuthContext);
+
+// ⚠️ set your admin email here as well (kept in code for UI)
+const ADMIN_EMAIL = "mmalith520@gmail.com";
+
+export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubcribe = onAuthStateChanged(auth, (user) => {
-      setUser(user ?? null);
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u ?? null);
+      setIsAdmin(!!u && u.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase());
       setLoading(false);
     });
-
-    return unsubcribe;
+    return unsub;
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-// export { AuthProvider, useAuth }
