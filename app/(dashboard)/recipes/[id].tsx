@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useLocalSearchParams, useRouter, Link } from "expo-router";
-import { ActivityIndicator, Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { getRecipe, removeRecipe } from "@/services/recipeService";
 import { useAuth } from "@/context/authContext";
+import { getRecipe, removeRecipe } from "@/services/recipeService";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function RecipeDetails() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id } = useLocalSearchParams<{ id?: string | string[] }>();
+  const recipeId = Array.isArray(id) ? id[0] : id;
   const [recipe, setRecipe] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const { isAdmin } = useAuth();
@@ -13,10 +14,12 @@ export default function RecipeDetails() {
 
   useEffect(() => {
     (async () => {
-      const r = await getRecipe(id!);
-      setRecipe(r); setLoading(false);
+      if (!recipeId) return;
+      const r = await getRecipe(recipeId);
+      setRecipe(r);
+      setLoading(false);
     })();
-  }, [id]);
+  }, [recipeId]);
 
   if (loading) return <ActivityIndicator />;
   if (!recipe) return <Text className="p-4">Not found</Text>;
@@ -25,7 +28,7 @@ export default function RecipeDetails() {
     Alert.alert("Delete", "Are you sure?", [
       { text: "Cancel" },
       { text: "Delete", style: "destructive", onPress: async () => {
-        await removeRecipe(id!);
+        await removeRecipe(recipeId!);
         router.back();
       }}
     ]);
@@ -34,10 +37,7 @@ export default function RecipeDetails() {
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 10 }}>
       <Text className="text-2xl font-extrabold">{recipe.title}</Text>
-      {recipe.images?.[0] && (
-        <Image source={{ uri: recipe.images[0] }} className="w-full h-56 rounded-xl" />
-      )}
-      {recipe.description ? <Text className="text-base">{recipe.description}</Text> : null}
+      {recipe.description ? <Text>{recipe.description}</Text> : null}
 
       <Text className="mt-3 text-lg font-bold">Ingredients</Text>
       {recipe.ingredients?.map((x: string, i: number) => <Text key={i}>• {x}</Text>)}
@@ -47,7 +47,7 @@ export default function RecipeDetails() {
 
       {isAdmin && (
         <View className="flex-row gap-3 mt-4">
-          <Link href={{ pathname: "/(dashboard)/recipes/edit", params: { id } }} asChild>
+          <Link href={{ pathname: "/recipes/edit", params: { id: String(recipeId) } }} asChild>
             <TouchableOpacity className="px-4 py-3 border rounded-lg">
               <Text>Edit</Text>
             </TouchableOpacity>

@@ -1,44 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import { AdminOnly } from "@/components/AdminOnly";
-import { createRecipe, getRecipe, updateRecipe, uploadRecipeImage } from "@/services/recipeService";
-import { Recipe } from "@/types/recipe";
 import { useAuth } from "@/context/authContext";
+import { createRecipe, getRecipe, updateRecipe } from "@/services/recipeService";
+import { Recipe } from "@/types/recipe";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity } from "react-native";
 
 export default function EditRecipe() {
-  const { id } = useLocalSearchParams<{ id?: string }>();
-  const isNew = !id;
+  const { id } = useLocalSearchParams<{ id?: string | string[] }>();
+  const recipeId = Array.isArray(id) ? id[0] : id;
+  const isNew = !recipeId;
   const router = useRouter();
   const { user } = useAuth();
 
   const [model, setModel] = useState<Recipe>({
-    title: "", description: "", ingredients: [], steps: [], images: [],
-    isPublished: true, tags: [], prepTimeMin: 0, cookTimeMin: 0, serves: 1,
+    title: "", description: "", ingredients: [], steps: [],
+    isPublished: true,
   });
 
   useEffect(() => {
     (async () => {
-      if (!isNew && id) {
-        const r = await getRecipe(id);
+      if (!isNew && recipeId) {
+        const r = await getRecipe(recipeId);
         if (r) setModel(r);
       }
     })();
-  }, [id]);
+  }, [recipeId]);
 
   const setField = (k: keyof Recipe, v: any) => setModel(m => ({ ...m, [k]: v }));
-
-  const pickImage = async () => {
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true, quality: 0.8
-    });
-    if (!res.canceled) {
-      const url = await uploadRecipeImage(res.assets[0].uri);
-      setField("images", [...(model.images || []), url]);
-    }
-  };
 
   const save = async () => {
     if (!model.title.trim()) { Alert.alert("Title required"); return; }
@@ -46,11 +35,11 @@ export default function EditRecipe() {
       if (isNew) {
         await createRecipe({ ...model, createdBy: user?.uid || "" });
       } else {
-        await updateRecipe(id!, model);
+        await updateRecipe(recipeId!, model);
       }
       router.back();
     } catch (e) {
-      console.log("Save error", e);
+      console.log("save error:", e);
       Alert.alert("Error", "Failed to save recipe");
     }
   };
@@ -88,12 +77,8 @@ export default function EditRecipe() {
           multiline
         />
 
-        <TouchableOpacity onPress={pickImage} className="px-4 py-3 border rounded-lg">
-          <Text>Upload Image</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={save} className="px-4 py-3 rounded-lg" style={{ backgroundColor: "#10B981" }}>
-          <Text className="font-semibold text-center text-white">{isNew ? "Create" : "Save changes"}</Text>
+          <Text className="text-white font-semibold text-center">{isNew ? "Create" : "Save changes"}</Text>
         </TouchableOpacity>
       </ScrollView>
     </AdminOnly>

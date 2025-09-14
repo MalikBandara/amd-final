@@ -1,18 +1,12 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "@/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Ctx = {
-  user: User | null;
-  loading: boolean;
-  isAdmin: boolean;
-};
-
+type Ctx = { user: User | null; loading: boolean; isAdmin: boolean; };
 const AuthContext = createContext<Ctx>({ user: null, loading: true, isAdmin: false });
 export const useAuth = () => useContext(AuthContext);
 
-// ⚠️ set your admin email here as well (kept in code for UI)
-const ADMIN_EMAIL = "mmalith520@gmail.com";
+const ADMIN_EMAIL = "your-admin@email.com"; // 👈 change this
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);

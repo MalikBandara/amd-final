@@ -1,5 +1,5 @@
-import { Tabs } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
 
 const tabs = [
   { label: "Home",    name: "home",    icon: "home-filled" },

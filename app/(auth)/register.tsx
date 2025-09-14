@@ -1,20 +1,20 @@
 import { register } from "@/services/authService";
 import { useRouter } from "expo-router";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Animated,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
+  ScrollView,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  StatusBar,
-  Dimensions,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
@@ -120,6 +120,7 @@ const Register = () => {
           <View className="absolute rounded-full top-20 -left-20 w-80 h-80 bg-green-500/8 blur-3xl" />
           <View className="absolute rounded-full bottom-40 -right-20 w-96 h-96 bg-orange-500/6 blur-3xl" />
         </View>
+        export default Register;
 
         <ScrollView
           className="flex-1"
