@@ -6,7 +6,7 @@ type Ctx = { user: User | null; loading: boolean; isAdmin: boolean; };
 const AuthContext = createContext<Ctx>({ user: null, loading: true, isAdmin: false });
 export const useAuth = () => useContext(AuthContext);
 
-const ADMIN_EMAIL = "your-admin@email.com"; // 👈 change this
+const ADMIN_EMAIL = "mmalith520@gmail.com"; // 👈 change this
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
