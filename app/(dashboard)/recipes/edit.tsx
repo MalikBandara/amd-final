@@ -78,7 +78,7 @@ export default function EditRecipe() {
         />
 
         <TouchableOpacity onPress={save} className="px-4 py-3 rounded-lg" style={{ backgroundColor: "#10B981" }}>
-          <Text className="text-white font-semibold text-center">{isNew ? "Create" : "Save changes"}</Text>
+          <Text className="font-semibold text-center text-white">{isNew ? "Create" : "Save changes"}</Text>
         </TouchableOpacity>
       </ScrollView>
     </AdminOnly>
