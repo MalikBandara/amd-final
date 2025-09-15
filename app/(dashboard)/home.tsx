@@ -1,14 +1,14 @@
 import { listRecipes } from "@/services/recipeService";
 import { Recipe } from "@/types/recipe";
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
   Text,
   TouchableOpacity,
   View,
-  Dimensions,
 } from "react-native";
 
 const { height, width } = Dimensions.get("window");
@@ -17,8 +17,10 @@ export default function HomePage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const params = useLocalSearchParams();
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         const data = await listRecipes();
         setRecipes(data);
@@ -26,7 +28,7 @@ export default function HomePage() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [params.refresh]);
 
   if (loading) {
     return (
