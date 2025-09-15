@@ -1,6 +1,6 @@
 import { AdminOnly } from "@/components/AdminOnly";
 import { useAuth } from "@/context/authContext";
-import { createRecipe, getRecipe, updateRecipe } from "@/services/recipeService";
+import { getRecipe, updateRecipe } from "@/services/recipeService";
 import { Recipe } from "@/types/recipe";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -16,7 +16,6 @@ import {
 export default function EditRecipe() {
   const { id } = useLocalSearchParams<{ id?: string | string[] }>();
   const recipeId = Array.isArray(id) ? id[0] : id;
-  const isNew = !recipeId;
   const router = useRouter();
   const { user } = useAuth();
 
@@ -30,7 +29,7 @@ export default function EditRecipe() {
 
   useEffect(() => {
     (async () => {
-      if (!isNew && recipeId) {
+      if (recipeId) {
         const r = await getRecipe(recipeId);
         if (r) setModel(r);
       }
@@ -46,11 +45,8 @@ export default function EditRecipe() {
       return;
     }
     try {
-      if (isNew) {
-        await createRecipe({ ...model, createdBy: user?.uid || "" });
-      } else {
-        await updateRecipe(recipeId!, model);
-      }
+      await updateRecipe(recipeId!, model);
+      Alert.alert("✅ Success", "Recipe updated");
       router.back();
     } catch (e) {
       console.log("save error:", e);
@@ -69,12 +65,10 @@ export default function EditRecipe() {
           }}
         >
           <View className="bg-[#1C2232] rounded-2xl p-6 shadow-lg">
-            {/* ---------- HEADER ---------- */}
             <Text className="mb-6 text-2xl font-extrabold text-center text-green-400">
-              {isNew ? "✨ Create New Recipe" : "✏️ Edit Recipe"}
+              ✏️ Edit Recipe
             </Text>
 
-            {/* ---------- INPUTS ---------- */}
             <TextInput
               placeholder="Title"
               placeholderTextColor="#9CA3AF"
@@ -95,7 +89,7 @@ export default function EditRecipe() {
             <TextInput
               placeholder="Ingredients (comma separated)"
               placeholderTextColor="#9CA3AF"
-              defaultValue={model.ingredients?.join(", ")}
+              value={model.ingredients?.join(", ")}
               onChangeText={(t) =>
                 setField(
                   "ingredients",
@@ -108,7 +102,7 @@ export default function EditRecipe() {
             <TextInput
               placeholder="Steps (line separated)"
               placeholderTextColor="#9CA3AF"
-              defaultValue={model.steps?.join("\n")}
+              value={model.steps?.join("\n")}
               onChangeText={(t) =>
                 setField(
                   "steps",
@@ -119,20 +113,12 @@ export default function EditRecipe() {
               multiline
             />
 
-            {/* ---------- SAVE BUTTON ---------- */}
             <TouchableOpacity
               onPress={save}
               className="w-full py-4 bg-green-500 rounded-xl"
-              style={{
-                shadowColor: "#10B981",
-                shadowOffset: { width: 0, height: 6 },
-                shadowOpacity: 0.3,
-                shadowRadius: 8,
-                elevation: 4,
-              }}
             >
               <Text className="text-lg font-bold text-center text-white">
-                {isNew ? "🚀 Create Recipe" : "💾 Save Changes"}
+                💾 Save Changes
               </Text>
             </TouchableOpacity>
           </View>
