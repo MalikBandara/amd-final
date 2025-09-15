@@ -1,6 +1,5 @@
 import { useAuth } from "@/context/authContext";
 import { getRecipe, removeRecipe } from "@/services/recipeService";
-import { Ionicons } from "@expo/vector-icons";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -51,7 +50,7 @@ export default function RecipeDetails() {
         style: "destructive",
         onPress: async () => {
           await removeRecipe(recipeId!);
-          router.back();
+          router.replace("/home?refresh=1");
         },
       },
     ]);
@@ -61,12 +60,8 @@ export default function RecipeDetails() {
     <View className="flex-1 bg-[#0A0F1C]">
       {/* ---------- HEADER WITH BACK BUTTON ---------- */}
       <View className="flex-row items-center p-4">
-        <TouchableOpacity
-          onPress={() => router.back()}
-          className="mr-3 p-2 rounded-full bg-[#1C2232]"
-        >
-          <Ionicons name="arrow-back" size={22} color="#fff" />
-        </TouchableOpacity>
+        
+         
         <Text className="text-xl font-bold text-white">Recipe Details</Text>
       </View>
 

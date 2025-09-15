@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 
 const tabs = [
   { label: "Home", name: "home", icon: "home-filled" },
@@ -32,7 +32,7 @@ export default function DashboardLayout() {
             tabPress: (e) => {
               if (name === "recipes") {
                 e.preventDefault();
-                navigation.navigate("recipes/index"); // ✅ always go to list
+                router.push("/(dashboard)/recipes");
               }
             },
           })}

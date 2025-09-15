@@ -8,7 +8,10 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from "react-native";
+
+const { height, width } = Dimensions.get("window");
 
 export default function HomePage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -27,63 +30,77 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center bg-[#0A0F1C]">
+      <View className="items-center justify-center flex-1 bg-slate-900">
         <ActivityIndicator size="large" color="#10B981" />
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-[#0A0F1C]">
+    <View className="flex-1 bg-slate-900">
       {/* ---------- HEADER ---------- */}
-      <View className="p-6">
-        <Text className="text-4xl font-extrabold text-white">
-          🍳 Cook Book
-        </Text>
-        <Text className="mt-2 text-gray-400">
-          Master culinary arts with chef-curated recipes
+      <View className="px-6 py-5 border-b border-slate-700 bg-slate-800">
+        <Text className="text-3xl font-extrabold text-white">🍳 Cook Book</Text>
+        <Text className="mt-1 text-sm font-medium text-emerald-400">
+          Your Personal Recipes
         </Text>
       </View>
 
-      {/* ---------- RECIPES LIST ---------- */}
+      {/* ---------- MAIN RECIPES LIST ---------- */}
       <FlatList
         data={recipes}
         keyExtractor={(item) => item.id!}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 40 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: 120 }}
         ListEmptyComponent={
-          <Text className="mt-10 text-center text-gray-500">
-            No recipes yet.
+          <Text className="py-6 text-center text-slate-500">
+            No recipes yet. Start by adding one!
           </Text>
         }
         renderItem={({ item }) => (
           <Link href={`/recipes/${item.id}`} asChild>
             <TouchableOpacity
-              className="mb-4 rounded-2xl bg-[#1C2232] p-5 shadow-lg"
-              style={{
-                shadowColor: "#10B981",
-                shadowOpacity: 0.15,
-                shadowOffset: { width: 0, height: 6 },
-                shadowRadius: 8,
-                elevation: 4,
-              }}
+              className="p-5 mb-5 border shadow-lg rounded-3xl bg-slate-800 border-slate-700"
+              style={{ width: width - 32 }}
             >
-              <Text className="text-xl font-bold text-white">
+              {/* Title */}
+              <Text
+                className="mb-2 text-xl font-bold text-white"
+                numberOfLines={1}
+              >
                 {item.title}
               </Text>
+
+              {/* Description */}
               {item.description ? (
-                <Text className="mt-2 text-gray-400">
+                <Text
+                  className="mb-3 text-sm text-slate-400"
+                  numberOfLines={2}
+                >
                   {item.description}
                 </Text>
               ) : null}
-              <View className="flex-row items-center mt-3">
-                <Text className="text-sm text-green-400">
+
+              {/* Footer */}
+              <View className="flex-row items-center justify-between">
+                <Text className="text-xs font-medium text-emerald-400">
                   ⭐ Popular Recipe
                 </Text>
+                <Text className="text-xs text-slate-500">Tap to view →</Text>
               </View>
             </TouchableOpacity>
           </Link>
         )}
       />
+
+      {/* ---------- FLOATING ACTION BUTTON ---------- */}
+      <Link href="/recipes/create" asChild>
+        <TouchableOpacity
+          className="absolute items-center justify-center w-16 h-16 rounded-full shadow-2xl bottom-6 right-6 bg-emerald-500"
+          activeOpacity={0.9}
+        >
+          <Text className="text-3xl text-white">＋</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
