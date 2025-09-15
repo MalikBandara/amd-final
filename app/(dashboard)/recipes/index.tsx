@@ -32,35 +32,40 @@ export default function CreateRecipePage() {
   }
 
   const handleSave = async () => {
-    if (!title.trim()) {
-      Alert.alert("Validation", "Title is required");
-      return;
-    }
-    setSaving(true);
-    try {
-      const newRecipe: Omit<Recipe, "createdAt"> = {
-        title,
-        description,
-        ingredients: ingredients.split(",").map((i) => i.trim()).filter(Boolean),
-        steps: steps.split("\n").map((s) => s.trim()).filter(Boolean),
-        isPublished: true,
-        createdBy: user?.uid || "",
-      };
-      await createRecipe(newRecipe);
-      Alert.alert("✅ Success", "Recipe created successfully");
-      // Reset form
-      setTitle("");
-      setDescription("");
-      setIngredients("");
-      setSteps("");
-      router.back(); // go back to recipe list/home
-    } catch (err) {
-      console.error("Create recipe error:", err);
-      Alert.alert("❌ Error", "Failed to create recipe");
-    } finally {
-      setSaving(false);
-    }
-  };
+  if (!title.trim()) {
+    Alert.alert("Validation", "Title is required");
+    return;
+  }
+  setSaving(true);
+  try {
+    const newRecipe: Omit<Recipe, "createdAt"> = {
+      title,
+      description,
+      ingredients: ingredients.split(",").map((i) => i.trim()).filter(Boolean),
+      steps: steps.split("\n").map((s) => s.trim()).filter(Boolean),
+      isPublished: true,
+      createdBy: user?.uid || "",
+    };
+    await createRecipe(newRecipe);
+    Alert.alert("✅ Success", "Recipe created successfully");
+    setTitle("");
+    setDescription("");
+    setIngredients("");
+    setSteps("");
+
+    // ⬇️ Navigate back and trigger refresh
+    router.push({
+      pathname: "/home",
+      params: { refresh: Date.now().toString() },
+    });
+  } catch (err) {
+    console.error("Create recipe error:", err);
+    Alert.alert("❌ Error", "Failed to create recipe");
+  } finally {
+    setSaving(false);
+  }
+};
+
 
   return (
     <View className="flex-1 bg-[#0A0F1C]">

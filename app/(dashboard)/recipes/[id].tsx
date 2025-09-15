@@ -60,9 +60,10 @@ export default function RecipeDetails() {
     <View className="flex-1 bg-[#0A0F1C]">
       {/* ---------- HEADER WITH BACK BUTTON ---------- */}
       <View className="flex-row items-center p-4">
+        <TouchableOpacity onPress={() => router.back()} className="p-2 mr-4">
+          
+        </TouchableOpacity>
         
-         
-        <Text className="text-xl font-bold text-white">Recipe Details</Text>
       </View>
 
       {/* ---------- CONTENT ---------- */}
