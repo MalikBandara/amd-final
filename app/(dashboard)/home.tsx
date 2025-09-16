@@ -94,15 +94,7 @@ export default function HomePage() {
         )}
       />
 
-      {/* ---------- FLOATING ACTION BUTTON ---------- */}
-      <Link href="/recipes/create" asChild>
-        <TouchableOpacity
-          className="absolute items-center justify-center w-16 h-16 rounded-full shadow-2xl bottom-6 right-6 bg-emerald-500"
-          activeOpacity={0.9}
-        >
-          <Text className="text-3xl text-white">＋</Text>
-        </TouchableOpacity>
-      </Link>
+      
     </View>
   );
 }
