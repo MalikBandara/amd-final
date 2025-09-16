@@ -83,7 +83,7 @@ const SettingScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            className="w-full py-4 rounded-2xl bg-white/10"
+            className="w-full py-4 mt-3 rounded-2xl bg-white/10"
             onPress={() => router.back()}
           >
             <Text className="text-lg font-bold text-center text-white">Back</Text>

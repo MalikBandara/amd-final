@@ -158,7 +158,7 @@ const Index = () => {
           <View className="pb-12 space-y-4">
             {/* Primary Action Button - Pixel Style */}
             <TouchableOpacity
-              className="w-full py-4 rounded-full active:scale-95"
+              className="w-full py-4 mb-2 rounded-full active:scale-95"
               onPress={() => router.push("/(auth)/register")}
               style={{
                 backgroundColor: "#10B981",
@@ -171,7 +171,7 @@ const Index = () => {
             >
               <View className="flex-row items-center justify-center">
                 <View className="items-center justify-center w-6 h-6 mr-3 rounded-full bg-white/20">
-                  <Text className="text-xs text-white">🚀</Text>
+                  <Text className="text-xs text-white ">🚀</Text>
                 </View>
                 <Text className="text-lg font-bold text-white">
                   Start Your Journey
@@ -181,7 +181,7 @@ const Index = () => {
 
             {/* Secondary Action */}
             <TouchableOpacity
-              className="w-full py-4 border rounded-full bg-white/5 border-white/10 active:scale-95 backdrop-blur-sm"
+              className="w-full py-4 border rounded-full mb bg-white/5 border-white/10 active:scale-95 backdrop-blur-sm"
               onPress={() => router.push("/(auth)/login")}
             >
               <Text className="text-lg font-medium text-center text-white">
