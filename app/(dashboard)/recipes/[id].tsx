@@ -1,7 +1,8 @@
 import { useAuth } from "@/context/authContext";
 import { getRecipe, removeRecipe } from "@/services/recipeService";
+import { useFocusEffect } from "@react-navigation/native";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -19,14 +20,28 @@ export default function RecipeDetails() {
   const { isAdmin } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    (async () => {
-      if (!recipeId) return;
-      const r = await getRecipe(recipeId);
-      setRecipe(r);
-      setLoading(false);
-    })();
-  }, [recipeId]);
+  
+
+   useFocusEffect(
+    useCallback(() => {
+      let active = true;
+      const load = async () => {
+        if (!recipeId) return;
+        setLoading(true);
+        try {
+          const r = await getRecipe(recipeId);
+          if (active) setRecipe(r);
+        } finally {
+          if (active) setLoading(false);
+        }
+      };
+      load();
+
+      return () => {
+        active = false;
+      };
+    }, [recipeId])
+  );
 
   if (loading)
     return (

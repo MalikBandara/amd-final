@@ -47,7 +47,9 @@ export default function EditRecipe() {
     try {
   await updateRecipe(recipeId!, model);
   Alert.alert("✅ Success", "Recipe updated");
-  router.replace("/home?refresh=1");
+  router.back();
+  
+  
     } catch (e) {
       console.log("save error:", e);
       Alert.alert("Error", "Failed to save recipe");
