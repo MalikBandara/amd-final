@@ -50,7 +50,10 @@ export default function RecipeDetails() {
         style: "destructive",
         onPress: async () => {
           await removeRecipe(recipeId!);
+          Alert.alert("✅ Success", "Recipe deleted successfully");
+          router.back();
           router.replace("/home?refresh=1");
+          
         },
       },
     ]);
