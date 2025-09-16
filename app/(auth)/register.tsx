@@ -26,6 +26,7 @@ const Register = () => {
   const [isLoadingReg, setIsLoadingReg] = useState<boolean>(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [name, setName] = useState<string>("");
 
   // Animations
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -57,7 +58,7 @@ const Register = () => {
     setIsLoadingReg(true);
 
     try {
-      const res = await register(email, password);
+      const res = await register(name, email, password);
       console.log(res);
       router.back();
     } catch (err) {
@@ -131,6 +132,31 @@ const Register = () => {
                 transform: [{ translateY: slideAnim }],
               }}
             >
+              {/* Name Input */}
+              <View>
+                <Text className="mb-2 ml-1 text-sm font-medium text-white/80">
+                  Full Name
+                </Text>
+                <View
+                  className={`relative ${
+                    name
+                      ? "bg-white/10 border-green-500/50"
+                      : "bg-white/5 border-white/10"
+                  } border rounded-2xl`}
+                >
+                  <TextInput
+                    placeholder="Enter your full name"
+                    className="px-5 py-4 text-lg text-white"
+                    placeholderTextColor="#9CA3AF"
+                    value={name}
+                    onChangeText={setName}
+                  />
+                  <View className="absolute right-4 top-4">
+                    <Text className="text-lg text-green-400">👤</Text>
+                  </View>
+                </View>
+              </View>
+
               {/* Email Input */}
               <View>
                 <Text className="mb-2 ml-1 text-sm font-medium text-white/80">
@@ -216,9 +242,7 @@ const Register = () => {
                   <View className="items-center justify-center w-6 h-6 mr-3 rounded-full bg-white/20">
                     <Text className="text-xs text-white">✨</Text>
                   </View>
-                  <Text className="text-lg font-bold text-white">
-                    Register
-                  </Text>
+                  <Text className="text-lg font-bold text-white">Register</Text>
                 </View>
               )}
             </TouchableOpacity>
@@ -239,7 +263,8 @@ const Register = () => {
             {/* Info Note */}
             <View className="items-center p-4 mt-8 border bg-white/5 rounded-2xl border-white/10">
               <Text className="text-sm leading-5 text-center text-white/60">
-                🎉 Join our cooking community today and save your favorite recipes
+                🎉 Join our cooking community today and save your favorite
+                recipes
               </Text>
             </View>
           </View>
