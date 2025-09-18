@@ -2,6 +2,7 @@ import { useAuth } from "@/context/authContext";
 import { createRecipe } from "@/services/recipeService";
 import { Recipe } from "@/types/recipe";
 import { useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -69,6 +70,17 @@ export default function CreateRecipePage() {
 
   return (
     <View className="flex-1 bg-[#0A0F1C]">
+
+       {/* 🔙 Back Button */}
+      <View className="flex-row items-center p-4 mt-12">
+        <TouchableOpacity
+          onPress={() => router.push("/home")}
+          className="flex-row items-center"
+        >
+          <ArrowLeft size={24} color="white" />
+          <Text className="ml-2 text-base text-white">Back</Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView 
         className="flex-1" 
         showsVerticalScrollIndicator={false}

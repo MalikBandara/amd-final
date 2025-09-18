@@ -3,6 +3,7 @@ import { useAuth } from "@/context/authContext";
 import { getRecipe, updateRecipe } from "@/services/recipeService";
 import { Recipe } from "@/types/recipe";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -59,6 +60,15 @@ export default function EditRecipe() {
   return (
     <AdminOnly>
       <View className="flex-1 bg-[#0A0F1C]">
+        <View className="flex-row items-center p-4 mt-12">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="flex-row items-center"
+        >
+          <ArrowLeft size={24} color="white" />
+          <Text className="ml-2 text-base text-white">Back</Text>
+        </TouchableOpacity>
+      </View>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,

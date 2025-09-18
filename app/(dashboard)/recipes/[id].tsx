@@ -2,6 +2,7 @@ import { useAuth } from "@/context/authContext";
 import { getRecipe, removeRecipe } from "@/services/recipeService";
 import { useFocusEffect } from "@react-navigation/native";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
 import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
@@ -76,6 +77,16 @@ export default function RecipeDetails() {
 
   return (
     <View className="flex-1 bg-[#0A0F1C]">
+
+      <View className="flex-row items-center p-4 mt-12">
+        <TouchableOpacity
+          onPress={() => router.push("/home")}
+          className="flex-row items-center"
+        >
+          <ArrowLeft size={24} color="white" />
+          <Text className="ml-2 text-base text-white">Back</Text>
+        </TouchableOpacity>
+      </View>
       {/* ---------- HEADER WITH BACK BUTTON ---------- */}
       <View className="flex-row items-center p-4">
         <TouchableOpacity onPress={() => router.back()} className="p-2 mr-4">
