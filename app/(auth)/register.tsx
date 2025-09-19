@@ -53,17 +53,42 @@ const Register = () => {
     ]).start();
   }, []);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleRegister = async () => {
     if (isLoadingReg) return;
-    setIsLoadingReg(true);
 
+    // Basic Validation
+    if (!name.trim()) {
+      Alert.alert("Validation Error", "Full name is required");
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      Alert.alert("Validation Error", "Please enter a valid email address");
+      return;
+    }
+    if (password.length < 6) {
+      Alert.alert("Validation Error", "Password must be at least 6 characters");
+      return;
+    }
+
+    setIsLoadingReg(true);
     try {
       const res = await register(name, email, password);
-      console.log(res);
+      Alert.alert(
+        "✅ Success",
+        "Account created successfully. You can log in now."
+      );
       router.back();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      Alert.alert("Registration Failed", "Something went wrong");
+      let message = "Something went wrong. Please try again.";
+      if (err.code === "auth/email-already-in-use") {
+        message = "This email is already registered.";
+      } else if (err.code === "auth/weak-password") {
+        message = "Password must be stronger (at least 6 characters).";
+      }
+      Alert.alert("Registration Failed", message);
     } finally {
       setIsLoadingReg(false);
     }
