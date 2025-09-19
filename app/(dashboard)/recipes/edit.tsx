@@ -52,7 +52,7 @@ export default function EditRecipe() {
   
   
     } catch (e) {
-      console.log("save error:", e);
+      
       Alert.alert("Error", "Failed to save recipe");
     }
   };

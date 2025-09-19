@@ -1,8 +1,8 @@
 import { listRecipes } from "@/services/recipeService";
 import { Recipe } from "@/types/recipe";
+import { useIsFocused } from "@react-navigation/native";
 import { Link, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { useIsFocused } from "@react-navigation/native";
 import {
   ActivityIndicator,
   Dimensions,
@@ -60,7 +60,7 @@ export default function HomePage() {
   return (
     <SafeAreaView className="flex-1 bg-slate-900">
       {/* ---------- HEADER ---------- */}
-      <View className="px-6 py-5 border-b border-slate-700 bg-slate-800">
+      <View className="px-6 py-5 mb-5 border-b border-slate-700 bg-slate-800 ">
         <Text className="text-3xl font-extrabold text-white">🍳 Cook Book</Text>
         <Text className="mt-1 text-sm font-medium text-emerald-400">
           Your Personal Recipes

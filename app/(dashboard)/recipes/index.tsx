@@ -60,7 +60,7 @@ export default function CreateRecipePage() {
       params: { refresh: Date.now().toString() },
     });
   } catch (err) {
-    console.error("Create recipe error:", err);
+    
     Alert.alert("❌ Error", "Failed to create recipe");
   } finally {
     setSaving(false);

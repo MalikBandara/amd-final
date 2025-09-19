@@ -26,9 +26,9 @@ const SettingScreen = () => {
 
     try {
       await logout();
-      router.replace("/(auth)/login");
+      router.replace("/");
     } catch (err) {
-      console.error(err);
+      
       Alert.alert("Logout Failed", "Something went wrong.");
     } finally {
       setIsLoggingOut(false);
