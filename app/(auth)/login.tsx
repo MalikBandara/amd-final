@@ -1,21 +1,21 @@
+import { login } from "@/services/authService";
+import { useRouter } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  Alert,
+  Animated,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
-  Pressable,
-  Alert,
-  ActivityIndicator,
-  StatusBar,
-  Dimensions,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  View,
 } from "react-native";
-import React, { useState, useRef, useEffect } from "react";
-import { useRouter } from "expo-router";
-import { login } from "@/services/authService";
 
 const { width, height } = Dimensions.get("window");
 
@@ -57,10 +57,16 @@ const Login = () => {
       Alert.alert("Validation Error", "Email is required");
       return false;
     }
-    if (!email.includes("@")) {
-      Alert.alert("Validation Error", "Please enter a valid email");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Validation Error", "Please enter a valid email address");
       return false;
     }
+    if (password.length < 6) {
+      Alert.alert("Validation Error", "Password must be at least 6 characters");
+      return false;
+    }
+
     if (!password) {
       Alert.alert("Validation Error", "Password is required");
       return false;
@@ -75,13 +81,19 @@ const Login = () => {
 
     try {
       const res = await login(email, password);
-      console.log(res);
 
       // Success - navigate to home
       router.push("/home");
-    } catch (err) {
-      console.error(err);
-      Alert.alert("Login Failed", "Invalid credentials. Please try again.");
+    } catch (err: any) {
+      let message = "Something went wrong. Please try again.";
+      if (err.code === "auth/user-not-found") {
+        message = "No account found with this email.";
+      } else if (err.code === "auth/wrong-password") {
+        message = "Incorrect password.";
+      } else if (err.code === "auth/network-request-failed") {
+        message = "Network error. Check your connection.";
+      }
+      Alert.alert("Login Failed", message);
     } finally {
       setIsLoadingLogin(false);
     }
@@ -208,7 +220,10 @@ const Login = () => {
               </View>
 
               {/* Forgot Password */}
-              <TouchableOpacity className="items-end">
+              <TouchableOpacity
+                className="items-end"
+                onPress={() => router.push("/(auth)/ForgotPassword")}
+              >
                 <Text className="text-sm font-medium text-green-400 underline">
                   Forgot Password?
                 </Text>
