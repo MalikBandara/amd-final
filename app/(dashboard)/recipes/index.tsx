@@ -187,7 +187,7 @@ export default function CreateRecipePage() {
                 <ActivityIndicator color="#fff" />
               ) : (
                 <Text className="text-xl font-bold text-center text-white">
-                  🚀 Save Recipe
+                   Save Recipe
                 </Text>
               )}
             </TouchableOpacity>
