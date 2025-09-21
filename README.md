@@ -1,69 +1,114 @@
-# Welcome to your Expo app 👋
+# 🍲 Cook Book – Recipe App  
+**Module:** ITS 2127 - Advanced Mobile Developer (AMD)  
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
-## Get started
+## 🚀 Project Overview  
+**Cook Book** is a cross-platform mobile recipe management app built with **React Native (Expo)** and **Firebase (Firestore + Authentication)**.  
 
-1. Install dependencies
+The app allows **Admins** to manage recipes (add, edit, delete) and **Users** to view recipes with restricted access.  
 
-   ```bash
-   npm install
-   ```
+Key Features:  
+- ✅ **User Authentication** (Register, Login, Logout)  
+- ✅ **Role-based Access Control** (Admin vs User)  
+- ✅ **CRUD Operations** for recipes (Create, Read, Update, Delete)  
+- ✅ **State Management** (React Context API , useState , useEffect)  
+- ✅ **Navigation** (Expo Router – Stack Navigation)  
+- ✅ **Responsive & User-friendly UI**  
+- ✅ **Android Build (APK) Provided)**  
+- ✅ **Demo Video** (YouTube showcase of features)  
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🎥 Demo Video  
+📌 [Watch on YouTube](https://youtu.be/vyzfHMrkzEc?si=k2deZSvLY4XhXuCn)  
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## ⚙️ Tech Stack  
+- **Frontend:** React Native (Expo)  
+- **Backend:** Firebase Firestore  
+- **Authentication:** Firebase Authentication (Email/Password)  
+- **State Management:** React Context API  
+- **Navigation:** Expo Router (Stack Navigation)  
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📂 Project Structure  
 
-When you're ready, run:
+AMD-FINAL/
+│ app.json
+│ babel.config.js
+│ eas.json
+│ package.json
+│ tsconfig.json
+│ README.md
+│ .gitignore
+│
+├─ app/
+│ ├─ (auth)/
+│ │ ├─ login.tsx
+│ │ └─ register.tsx
+│ ├─ (dashboard)/
+│ │ ├─ home.tsx ← Recipe list
+│ │ ├─ recipeCreate.tsx ← Create recipe (Admin only)
+│ │ ├─ recipeEdit.tsx ← Edit recipe (Admin only)
+│ │ └─ recipeView.tsx ← View recipe (User/Admin)
+│ ├─ _layout.tsx
+│ └─ index.tsx
+│
+├─ assets/ ← Images / Fonts
+│
+├─ components/
+│ ├─ AdminOnly.tsx ← Guarded route for Admin role
+│ ├─ Loader.tsx ← Loading indicator
+│
+├─ context/
+│ ├─ authContext.tsx ← Authentication state
+│ └─ LoaderContext.tsx ← Global loader state
+│
+├─ services/
+│ ├─ authService.ts ← Firebase auth functions
+│ └─ recipeService.ts ← Firestore recipe CRUD
+│
+├─ types/
+│ └─ recipe.ts ← Type definitions for recipes
+│
+├─ scripts/ ← Utility scripts (if any)
+│
+└─ my-expo-app/ ← Expo helper folder
 
+
+
+---
+
+## 🔑 Core Functionalities  
+
+### 👨‍🍳 Admin Role  
+- Add new recipes  
+- Edit existing recipes  
+- Delete recipes  
+- View all recipes  
+
+### 👤 User Role  
+- Register / Login  
+- View all recipes  
+- **No access** to create, edit, or delete  
+
+---
+
+## 🛠️ Setup & Run Instructions  
+
+### 1. Clone the Repository  
 ```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+git clone https://github.com/MalikBandara/amd-final.git
+cd cook-book
 
 
 
-step 01 - create this expo project - npx create-expo-app@latest StickerSmash
 
 
 
-step 02 - go to fire base and create a new project 
-step 03 - delete all of the files in app
-step 04 - install tailwind to this project - 
-npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0
-npm install --dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11
-npx tailwindcss init
 
-step 05 - add all tailwind to this project and i done it
-step 06 - add loader into the startPage
-step 07 - install fire base into my project npm i firebase @react-native-async-storage/async-storage
-step 08 - add firebase.ts file into my project 
-step 09 - add firebase auth to my project 
+
