@@ -71,7 +71,7 @@ Copy your Firebase config and replace it inside firebaseConfig.ts
 
 ---
 
-###4️⃣ Start Expo
+### 4️⃣ Start Expo
 
 npx expo start
 # or
@@ -102,6 +102,7 @@ expo build:android
 ### 🚀 EAS Build
 
 eas build -p android
+
 
 
 
