@@ -13,7 +13,7 @@ The app includes **authentication**, **role-based access (Admin/User)**, recipe 
 
 ## ✨ Features  
 - 🔐 **User authentication** (Login & Sign Up with Firebase)  
-- 👁️ **Password visibility toggle**  
+- 👁️ **Forgot Password Feature**  
 - 📖 **Recipe collection dashboard**  
 - ✏️ **Admin-only features** – Add, Edit, Delete recipes  
 - 👤 **User role** – View recipes only  
@@ -102,4 +102,5 @@ expo build:android
 ### 🚀 EAS Build
 
 eas build -p android --profile preview
+
 
