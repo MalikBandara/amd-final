@@ -101,10 +101,5 @@ expo build:android
 
 ### 🚀 EAS Build
 
-eas build -p android
-
-
-
-
-
+eas build -p android --profile preview
 
